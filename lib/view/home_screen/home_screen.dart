@@ -1,6 +1,5 @@
+import 'package:assignment_3/view/add_task/add_task_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../resources/resources.dart';
 import '../../widget/widget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -31,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Container(
                         constraints: const BoxConstraints(maxWidth: 270),
-                        child:   const Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextRich(
@@ -46,7 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+
+                        },
                         icon: const Icon(Icons.delete_outline_rounded),
                       )
                     ],
@@ -58,10 +59,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          buildShowModalBottomSheet(context);
+        },
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
 
+  Future<dynamic> buildShowModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return AddTaskScreen();
+      },
+    );
+  }
+}

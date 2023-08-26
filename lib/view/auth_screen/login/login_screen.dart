@@ -2,7 +2,6 @@ import 'package:assignment_3/routes/routes_name.dart';
 import 'package:assignment_3/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../resources/resources.dart';
 import '../../../services/firebase_auth.dart';
 
