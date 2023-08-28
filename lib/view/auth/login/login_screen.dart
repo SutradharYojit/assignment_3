@@ -3,13 +3,14 @@ import 'package:assignment_3/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../resources/resources.dart';
-import '../../../services/firebase_auth.dart';
+import '../../../services/firebase_services.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passCtrl = TextEditingController();
+  final bar = WarningBar();
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +51,20 @@ class LoginScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () async {
                       WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-                      await FirebaseAuthServices().signIN(
-                        context,
-                        textEmail: _emailCtrl.text.trim(),
-                        textPass: _passCtrl.text.trim(),
-                      );
+                      if (_emailCtrl.text.trim() == "" ||
+                          _emailCtrl.text.trim().isEmpty ||
+                          _passCtrl.text.trim() == "" ||
+                          _passCtrl.text.trim().isEmpty) {
+                        final notExist = bar.snack("Enter all Filled", ColorManager.redColor);
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(notExist);
+                      } else {
+                        await FirebaseServices().signIN(
+                          context,
+                          textEmail: _emailCtrl.text.trim(),
+                          textPass: _passCtrl.text.trim(),
+                        );
+                      }
                     },
                     child: const Text("Login"),
                   ),

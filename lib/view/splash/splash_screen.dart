@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             userPreferences.pass != null &&
             userPreferences.email!.isNotEmpty &&
             userPreferences.pass!.isNotEmpty) {
-          context.go(RoutesName.homeScreen);
+          context.go(RoutesName.dashboardScreen);
         } else {
           context.go(RoutesName.loginScreen);
         }

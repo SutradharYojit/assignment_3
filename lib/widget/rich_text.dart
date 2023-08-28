@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../resources/resources.dart';
 
 class TextRich extends StatelessWidget {
@@ -14,19 +13,22 @@ class TextRich extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: title,
-        style: TextStyle(color: ColorManager.blackColor, fontSize: 13, fontWeight: FontWeight.bold),
-        children: <TextSpan>[
-          TextSpan(
-            text: '\t $description',
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w400,
-            ),
-          )
-        ],
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 200),
+      child: RichText(
+        text: TextSpan(
+          text: title,
+          style: TextStyle(color: ColorManager.blackColor, fontSize: 13, fontWeight: FontWeight.bold),
+          children: <TextSpan>[
+            TextSpan(
+              text: '\t $description',
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

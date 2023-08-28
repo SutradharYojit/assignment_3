@@ -23,9 +23,21 @@ GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: RoutesName.dashboardScreen,
+      builder: (context, state) {
+        return DashBoardScreen();
+      },
+    ),
+    GoRoute(
       path: RoutesName.homeScreen,
       builder: (context, state) {
-        return MyHomePage();
+        return const MyHomePage();
+      },
+    ),
+    GoRoute(
+      path: RoutesName.addTaskScreen,
+      builder: (context, state) {
+        return AddTaskScreen(data: state.extra as UpdateData);
       },
     ),
   ],
