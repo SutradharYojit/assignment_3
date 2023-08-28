@@ -51,82 +51,82 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         ),
                       )
                     : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                return Dismissible(
-                                  onDismissed: (direction) async {
-                                    firebaseServices.deleteTodo(context, id: data[index].id!);
-                                    ref.read(todoList.notifier).remove(data[index]);
-                                  },
-                                  key: UniqueKey(),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      context.push(
-                                        RoutesName.addTaskScreen,
-                                        extra: UpdateData(
-                                            id: data[index].id!,
-                                            title: data[index].title!,
-                                            description: data[index].description!,
-                                            taskStatus: data[index].flag!,
-                                            homeScreen: true),
-                                      );
-                                    },
-                                    child: Card(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              constraints: const BoxConstraints(
-                                                maxWidth: 270,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                          data.isEmpty
+                              ? Center(child: const Text("No Todo list"))
+                              : Expanded(
+                                  child: ListView.builder(
+                                    itemCount: data.length,
+                                    itemBuilder: (context, index) {
+                                      return Dismissible(
+                                        onDismissed: (direction) async {
+                                          firebaseServices.deleteTodo(context, id: data[index].id!);
+                                          ref.read(todoList.notifier).remove(data[index]);
+                                        },
+                                        key: UniqueKey(),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            context.push(
+                                              RoutesName.addTaskScreen,
+                                              extra: UpdateData(
+                                                  id: data[index].id!,
+                                                  title: data[index].title!,
+                                                  description: data[index].description!,
+                                                  taskStatus: data[index].flag!,
+                                                  homeScreen: true),
+                                            );
+                                          },
+                                          child: Card(
+                                            child: Container(
+                                              padding: const EdgeInsets.all(15),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  TextRich(
-                                                    title: "Title\t:",
-                                                    description: data[index].title!
+                                                  Container(
+                                                    constraints: const BoxConstraints(
+                                                      maxWidth: 270,
+                                                    ),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        TextRich(title: "Title\t:", description: data[index].title!),
+                                                        TextRich(
+                                                          title: "Description\t:",
+                                                          description: data[index].description!,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  TextRich(
-                                                    title: "Description\t:",
-                                                    description: data[index].description!,
-                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                        onPressed: () async {
+                                                          firebaseServices.deleteTodo(context, id: data[index].id!);
+                                                          ref.read(todoList.notifier).remove(data[index]);
+                                                        },
+                                                        icon: const Icon(Icons.delete_outline_rounded),
+                                                      ),
+                                                      Checkbox(
+                                                        value: data[index].flag,
+                                                        onChanged: (value) async {
+                                                          setState(() {});
+                                                          data[index].flag = value;
+                                                          firebaseServices.markTodo(context,
+                                                              id: data[index].id!, value: value!);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  )
                                                 ],
                                               ),
                                             ),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                  onPressed: () async {
-                                                    firebaseServices.deleteTodo(context, id: data[index].id!);
-                                                    ref.read(todoList.notifier).remove(data[index]);
-                                                  },
-                                                  icon: const Icon(Icons.delete_outline_rounded),
-                                                ),
-                                                Checkbox(
-                                                  value: data[index].flag,
-                                                  onChanged: (value) async {
-                                                    setState(() {});
-                                                    data[index].flag = value;
-                                                    firebaseServices.markTodo(context,
-                                                        id: data[index].id!, value: value!);
-                                                  },
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          )
+                                )
                         ],
                       );
               },
